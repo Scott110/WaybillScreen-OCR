@@ -35,7 +35,7 @@ public class TessEngine {
         TessBaseAPI tessBaseAPI = new TessBaseAPI();
         String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
         tessBaseAPI.setDebug(true);
-        boolean isInit = tessBaseAPI.init(path, "eng");
+        boolean isInit = tessBaseAPI.init(path, "num");
         Log.d(TAG, "init success: " +isInit);
         // 白名单
         tessBaseAPI.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");

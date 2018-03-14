@@ -1,1 +1,1 @@
-include ':qrcodecore', ':zxing', ':zbar', ':zxingdemo', ':zbardemo'
+include ':qrcodecore', ':zxing', ':zbar', ':zxingdemo', ':zbardemo', ':openCVLibrary340'

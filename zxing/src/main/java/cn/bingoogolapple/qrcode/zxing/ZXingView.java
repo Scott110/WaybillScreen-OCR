@@ -36,7 +36,7 @@ public class ZXingView extends QRCodeView {
 
         try {
             PlanarYUVLuminanceSource source = null;
-            Rect rect = mScanBoxView.getScanBoxAreaRect(height);
+            Rect rect = mScanBoxView.getScanBoxAreaRect(height, getTop(), getLeft());
             if (rect != null) {
                 source = new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top, rect.width(), rect.height(), false);
             } else {

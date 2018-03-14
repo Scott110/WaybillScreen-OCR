@@ -31,6 +31,7 @@ import java.util.Locale;
 import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.ocr.TessEngine;
+import cn.bingoogolapple.qrcode.opencv.ImageProcUtil;
 
 import static android.os.Environment.MEDIA_MOUNTED;
 
@@ -65,6 +66,7 @@ public class ZBarView extends QRCodeView {
 
     @Override
     public String processData(byte[] data, int width, int height, boolean isRetry) {
+        Log.d("TAG", "processData: 调用多长 ");
         String result = null;
         Image barcode = new Image(width, height, "Y800");
         Rect rect = mScanBoxView.getScanBoxAreaRect(height, getTop(), getLeft());
@@ -80,7 +82,10 @@ public class ZBarView extends QRCodeView {
             //将帧数据转为图片（new Rect()是定义一个矩形提取区域，我这里是提取了整张图片，然后旋转90度后再才裁切出需要的区域，效率会较慢，实际使用的时候，照片默认横向的,可以直接计算逆向90°时，left、top的值，然后直接提取需要区域，提出来之后再压缩、旋转 速度会快一些）
             image.compressToJpeg(new Rect(rect.left, rect.top, rect.right, rect.bottom), 100, stream);
             Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
-            bmp=convertToBMW(bmp,180);
+            //bmp=convertToBMW(bmp,180);
+            // ImageProcUtil().detectText(bmp,getContext());
+          bmp= new ImageProcUtil().recognizeImage(bmp,getContext());
+            //bmp=new ImageProcUtil().binaryzationBitmap(bmp);
             saveImage(bmp);
             String ocrTest = TessEngine.Generate(getContext()).detectText(bmp);
             return ocrTest;
