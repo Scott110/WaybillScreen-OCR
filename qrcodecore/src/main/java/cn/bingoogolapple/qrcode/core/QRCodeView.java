@@ -1,7 +1,6 @@
 package cn.bingoogolapple.qrcode.core;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -20,7 +19,8 @@ public abstract class QRCodeView extends RelativeLayout implements Camera.Previe
     protected boolean mSpotAble = false;
     protected ProcessDataTask mProcessDataTask;
     private int mOrientation;
-    public boolean mScanning = false;
+    public volatile boolean mScanning = false;
+
 
     public QRCodeView(Context context, AttributeSet attributeSet) {
         this(context, attributeSet, 0);

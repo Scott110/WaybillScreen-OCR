@@ -400,7 +400,7 @@ public class FullScanBoxView extends IScanBoxView {
             float ratio = 1.0f * previewHeight / screenHeight;
             //截取中心线上下间距20dp 区域为有效扫描区域
             int middle = (marginTop+mFramingRect.height()) / 2;
-            int padding = BGAQRCodeUtil.dp2px(getContext(), 20);
+            int padding = BGAQRCodeUtil.dp2px(getContext(), 15);
             Rect rect = new Rect(marginLeft, middle - padding, marginLeft+mFramingRect.width(), middle + padding);
             rect.left = (int) (rect.left * ratio);
             rect.right = (int) (rect.right * ratio);

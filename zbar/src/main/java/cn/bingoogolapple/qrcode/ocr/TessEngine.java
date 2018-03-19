@@ -8,12 +8,11 @@ import android.util.Log;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
-import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Fadi on 6/11/2014.
+ * Created by scott on 3/19/2018.
  */
 public class TessEngine {
 
@@ -31,23 +30,19 @@ public class TessEngine {
 
     public String detectText(Bitmap bitmap) {
         Log.d(TAG, "Initialization of TessBaseApi");
-        //System.loadLibrary("jpgt");
         TessBaseAPI tessBaseAPI = new TessBaseAPI();
         String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
         tessBaseAPI.setDebug(true);
         boolean isInit = tessBaseAPI.init(path, "num");
-        Log.d(TAG, "init success: " +isInit);
+        Log.d(TAG, "init success: " + isInit);
         // 白名单
-        tessBaseAPI.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+        tessBaseAPI.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "0123456789");
         // 黑名单
-        tessBaseAPI.setVariable(TessBaseAPI.VAR_CHAR_BLACKLIST, "!@#$%^&*()_+=-[]}{;:'\"\\|~`,./<>?");
+        tessBaseAPI.setVariable(TessBaseAPI.VAR_CHAR_BLACKLIST, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+=-[]}{;:'\"\\|~`,./<>?");
         tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO_OSD);
         Log.d(TAG, "Ended initialization of TessEngine");
-        Log.d(TAG, "Running inspection on bitmap");
         tessBaseAPI.setImage(bitmap);
         String inspection = tessBaseAPI.getHOCRText(0);
-
-        Log.d(TAG, "Confidence values: " + tessBaseAPI.meanConfidence());
         tessBaseAPI.end();
         System.gc();
         return getTelNum(inspection);
@@ -57,7 +52,6 @@ public class TessEngine {
     private static Pattern pattern = Pattern.compile("(1|861)(3|5|7|8)\\d{9}$*");
 
     public static String getTelNum(String sParam) {
-
         if (TextUtils.isEmpty(sParam)) {
             return "";
         }
@@ -71,7 +65,7 @@ public class TessEngine {
         if (len > 0) {
             bf.deleteCharAt(len - 1);
         }
-        Log.d(TAG, "识别的内容: "+bf.toString());
+        Log.d(TAG, "识别的内容: " + bf.toString());
         return bf.toString();
     }
 
